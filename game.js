@@ -100,7 +100,6 @@ class preloadGame extends Phaser.Scene{
 class playGame extends Phaser.Scene{
     constructor(){
         super("PlayGame");
-        gameOptions.score = 0;
 
     }
     create(){
@@ -110,15 +109,16 @@ class playGame extends Phaser.Scene{
         timer = this.time.addEvent({
             delay: 1000,                // ms
             callback: () => {
-                this.timerText.setText('Time: ' + this.millisToMinutesAndSeconds(clock.now));
+                this.timmerValue = this.millisToMinutesAndSeconds(clock.now);
+                this.timerText.setText('Time: ' + this.timmerValue);
                 console.log();
             },
             //args: [],
             // callbackScope: thisArg,
             loop: true
         });
-       
-        gameOptions.score = 0;
+        this.coinsValue = gameOptions.score;
+        this.timmerValue = this.millisToMinutesAndSeconds(clock.now);
         this.timerText = this.add.text(1100, 16, 'Time: 00:00', { fontSize: '32px', fill: '#000' });
         this.scoreText = this.add.text(16, 16, 'coins: 0', { fontSize: '32px', fill: '#000' });
        
@@ -219,9 +219,12 @@ class playGame extends Phaser.Scene{
     }
 
     updateScore(val){
-        gameOptions.score += val;
-        this.scoreText.setText('Score: ' + gameOptions.score);
-
+        this.coinsValue += val;
+        if(this.coinsValue < 0){
+            this.scoreText.setText('coins: 0');
+        }else{
+            this.scoreText.setText('coins: ' + this.coinsValue);
+        }
     }
 
     
@@ -334,7 +337,7 @@ class playGame extends Phaser.Scene{
     }
 
     update(){
-        if(this.player.y > game.config.height || gameOptions.score < 0){
+        if(this.player.y > game.config.height || this.coinsValue < 0){
             this.gameOver();
             // this.scene.start("PlayGame");
         }
@@ -394,7 +397,10 @@ class playGame extends Phaser.Scene{
 
     gameOver(){
         this.scene.pause();
-        displayResult(gameOptions.score,this.millisToMinutesAndSeconds(clock.now),this);
+        if(this.coinsValue<0) {
+            this.coinsValue = 0;
+        }
+        displayResult(this.coinsValue,this.timmerValue,this);
     }
 
     millisToMinutesAndSeconds(millis) {

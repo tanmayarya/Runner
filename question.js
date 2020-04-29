@@ -60,12 +60,13 @@ function genQuestion(){
 
 
 function displayQuestion() {
-    var body = document.getElementsByTagName("BODY")[0];
-    document.getElementById("myModalLabel").innerText = "Question: " + question;
-    document.getElementById("label0").innerText = options[0];
-    document.getElementById("label1").innerText = options[1];
-    document.getElementById("label2").innerText = options[2];
-    document.getElementById("label3").innerText = options[3];
+
+    $('#myModalLabel').text("Question: " + question);
+    $('#label0').text(options[0]);
+    $('#label1').text(options[1]);
+    $('#label2').text(options[2]);
+    $('#label3').text(options[3]);
+
     $('#myModal').modal('show');
     seconds = 15;
     var el = document.getElementById("countdown");
@@ -89,7 +90,7 @@ function mm(game){
     displayQuestion()
     interv = setTimeout(function(){
         hideModal();
-    },1500000);
+    },15000);
 }
 
 function hideModal(){
