@@ -1,11 +1,11 @@
-var marked = -1;
-var interv;
-var question = "";
-var options =[];
-var ans;
-var gameScene;
-var seconds = 15;
-var countdown;
+let marked = -1;
+let interv;
+let question = "";
+let options =[];
+let ans;
+let gameScene;
+let seconds = 15;
+let countdown;
 
 function submitClick(){
     marked = $("input[name='inlineRadioOptions']:checked").val();
@@ -31,7 +31,7 @@ function getRandom(min, max){
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
     while (0 !== currentIndex) {
   
       randomIndex = Math.floor(Math.random() * currentIndex);
@@ -45,13 +45,13 @@ function shuffle(array) {
     return array;
   }
 function genQuestion(){
-    var numbers = [getRandom(1,9), getRandom(1,9), getRandom(1,9), getRandom(1,9)];
-    var operators = ['+', '-'];
+    let numbers = [getRandom(1,9), getRandom(1,9), getRandom(1,9), getRandom(1,9)];
+    let operators = ['+', '-'];
     question = (numbers[0] + " " + operators[getRandom(0,1)] + " " + numbers[1] + " " + operators[getRandom(0,1)] + " " + numbers[2] + " " + operators[getRandom(0,1)] + " " + numbers[3]) ;
     ans = eval(question);
     options = [ans]
     while(options.length < 4){
-        var r = getRandom(0,37);
+        let r = getRandom(0,37);
         if(options.indexOf(r) === -1) options.push(r);
     }
 
@@ -69,7 +69,7 @@ function displayQuestion() {
 
     $('#myModal').modal('show');
     seconds = 15;
-    var el = document.getElementById("countdown");
+    let el = document.getElementById("countdown");
     el.textContent = seconds;
     countdown = setInterval(function() {
         seconds--;
@@ -80,11 +80,8 @@ function displayQuestion() {
    
 }
 
-// function hideQuestion(){
-//     $('#myModal').modal('hide');
-// }
-
-function mm(game){
+function manageQuestion(game){
+    marked = -1;
     gameScene = game;
     genQuestion();   
     displayQuestion()
@@ -99,8 +96,8 @@ function hideQuestion(){
     seconds = 15;
     
     $('input[name=inlineRadioOptions]').attr('checked',false);
-    var ans = eval(question);
-    var val = 0;
+    let ans = eval(question);
+    let val = 0;
     if(options[marked] === ans){
         val = 5;
     }

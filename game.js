@@ -1,7 +1,7 @@
 let game;
-var clock;
-var timer;
-var gameConfig;
+let clock;
+let timer;
+let gameConfig;
 
 let gameOptions = {
     coinValue: 1,
@@ -231,7 +231,7 @@ class playGame extends Phaser.Scene{
 
     dispQuestion(){
         this.scene.pause();
-        mm(this);
+        manageQuestion(this);
     }
 
     addMountains(){
@@ -404,8 +404,8 @@ class playGame extends Phaser.Scene{
     }
 
     millisToMinutesAndSeconds(millis) {
-        var minutes = Math.floor(millis / 60000);
-        var seconds = ((millis % 60000) / 1000).toFixed(0);
+        let minutes = Math.floor(millis / 60000);
+        let seconds = ((millis % 60000) / 1000).toFixed(0);
         return (seconds == 60 ? (minutes+1) + ":00" : minutes + ":" + (seconds < 10 ? "0" : "") + seconds);
     }
 };
