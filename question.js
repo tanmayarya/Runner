@@ -11,13 +11,13 @@ function submitClick(){
     marked = $("input[name='inlineRadioOptions']:checked").val();
     if(marked > -1){
         clearTimeout(interv);
-        hideModal();
+        hideQuestion();
     }
 }
 function cancelClick(){
     marked = -1;
     clearTimeout(interv);
-    hideModal();
+    hideQuestion();
 }
 
 function PlayAgain(){
@@ -80,21 +80,21 @@ function displayQuestion() {
    
 }
 
-function hideQuestion(){
-    $('#myModal').modal('hide');
-}
+// function hideQuestion(){
+//     $('#myModal').modal('hide');
+// }
 
 function mm(game){
     gameScene = game;
     genQuestion();   
     displayQuestion()
     interv = setTimeout(function(){
-        hideModal();
+        hideQuestion();
     },15000);
 }
 
-function hideModal(){
-    hideQuestion();
+function hideQuestion(){
+    $('#myModal').modal('hide');
     clearInterval(countdown);
     seconds = 15;
     
@@ -108,7 +108,37 @@ function hideModal(){
         val = -1;
     }
     gameScene.updateScore(val);
-    gameScene.scene.resume();
+    showAlert(val == 5);
+   
+    setTimeout(function(){
+        gameScene.scene.resume();
+    },3000);
+    
+
+}
+
+function showAlert(correct) {
+    let className;
+    let message;
+
+    if(correct) {
+        className = "alert alert-success collapse";
+        message = "Correct Answer, you earned 5 coins."
+    } else if(marked<0) {
+        className = "alert alert-warning collapse";
+        message = "Missed it, you lost a coin."
+    } else{
+        className = "alert alert-danger collapse";
+        message = "Wrong Answer, you lost a coin."
+    }
+
+    $("#myAlert").attr("class",className);
+    $("#myAlert").text(message);
+    $('#myAlert').show('fade');
+
+    setTimeout(function(){
+        $('#myAlert').hide('fade');
+    },2000);
 
 }
 

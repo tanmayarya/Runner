@@ -16,8 +16,8 @@ let gameOptions = {
     jumpForce: 400,
     playerStartPosition: 200,
     jumps: 2,
-    coinPercent: 10,
-    questionPercent: 100,
+    coinPercent: 50,
+    questionPercent: 25,
     score: 0
 }
 
